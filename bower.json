@@ -1,0 +1,16 @@
+{
+  "name": "2014-10-shortly-express",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jonarnaldo/2014-10-shortly-express",
+  "authors": [
+    "Hack Reactor Students <accounts@hackreactor.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

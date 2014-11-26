@@ -22,25 +22,39 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 
+app.get('/signup',
+function(req, res) {
+  res.render('signup');
+});
 
-app.get('/', 
+app.get('/login',
+function(req, res) {
+  res.render('login');
+});
+
+app.get('/',
+function(req, res) {
+  res.render('index');
+});
+// if user not login
+  // should go to login page
+// else go to index
+
+
+app.get('/create',
 function(req, res) {
   res.render('index');
 });
 
-app.get('/create', 
-function(req, res) {
-  res.render('index');
-});
 
-app.get('/links', 
+app.get('/links',
 function(req, res) {
   Links.reset().fetch().then(function(links) {
     res.send(200, links.models);
   });
 });
 
-app.post('/links', 
+app.post('/links',
 function(req, res) {
   var uri = req.body.url;
 
@@ -78,6 +92,21 @@ function(req, res) {
 // Write your authentication routes here
 /************************************************************/
 
+app.post('/signup', function(req,res) {
+  var username = req.body.username;
+  var password = req.body.password;
+
+  // check if username exists in user table
+    // If so, deny signup
+  // If not, insert new user, hashing password + salt in process
+
+
+})
+
+
+
+
+// Redirects to login page if a user tries to access the main page and is not signed in
 
 
 /************************************************************/
@@ -91,10 +120,12 @@ app.get('/*', function(req, res) {
     if (!link) {
       res.redirect('/');
     } else {
+      //Update the click table
       var click = new Click({
         link_id: link.get('id')
       });
 
+      //Then update the counter in urls table
       click.save().then(function() {
         db.knex('urls')
           .where('code', '=', link.get('code'))
