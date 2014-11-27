@@ -97,11 +97,27 @@ app.post('/signup', function(req,res) {
   var password = req.body.password;
 
   // check if username exists in user table
+  new User({ username: username }).fetch().then(function(user) {
+      if (!user) {
+        console.log('in signup user not found');
+        //Update the click table
+        var user = new User({
+          username: username,
+          password: password,
+          salt: '1234'
+        });
+        user.save().then(function(user){
+          console.log('saved: ' + user);
+          res.redirect('/');
+        });
+      } else {
+        console.log('user exists');
+      }
+
     // If so, deny signup
   // If not, insert new user, hashing password + salt in process
-
-
-})
+  })
+});
 
 
 
@@ -124,7 +140,6 @@ app.get('/*', function(req, res) {
       var click = new Click({
         link_id: link.get('id')
       });
-
       //Then update the counter in urls table
       click.save().then(function() {
         db.knex('urls')
