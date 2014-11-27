@@ -57,6 +57,7 @@ db.knex.schema.hasTable('user').then(function(exists) {
       //plaintext salt
       user.string('salt',255);
       // user.integer('link_id');
+      user.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
     });

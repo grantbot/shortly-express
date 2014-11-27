@@ -101,13 +101,16 @@ app.post('/signup', function(req,res) {
       if (!user) {
         console.log('in signup user not found');
         //Update the click table
+        //Add password requirement
         var user = new User({
           username: username,
           password: password,
           salt: '1234'
         });
-        user.save().then(function(user){
-          console.log('saved: ' + user);
+
+        user.save().then(function(newUser){
+          console.log('saved: ' + newUser);
+          Users.add(newUser);
           res.redirect('/');
         });
       } else {
