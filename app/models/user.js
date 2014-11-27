@@ -6,6 +6,7 @@ var Link = require('./link');
 var User = db.Model.extend({
   tableName: 'user',
   hasTimestamps: true,
+
   initialize: function(){
     this.on('creating', this.hashPassword);
   },
@@ -20,9 +21,10 @@ var User = db.Model.extend({
     // results in editing the model's password attribute. Only then
     // do we save the model to the database.
     var cipher = Promise.promisify(bcrypt.hash);
-    return cipher(model.get('password', null, null).then(function (hash) {
+
+    return cipher(model.get('password'), null, null).then(function (hash) {
       model.set('password',hash);
-    }));
+    });
 
 
   }

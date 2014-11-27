@@ -104,8 +104,7 @@ app.post('/signup', function(req,res) {
         //Add password requirement
         var user = new User({
           username: username,
-          password: password,
-          salt: '1234'
+          password: password
         });
 
         user.save().then(function(newUser){
